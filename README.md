@@ -22,7 +22,7 @@ Open **PowerShell** and paste this. It downloads the latest release to `C:\appfo
 starts setup, which asks its questions one at a time:
 
 ```powershell
-$z="$env:TEMP\appfolio-leasing.zip"; Invoke-WebRequest https://github.com/JerryWest1/appfolio-leasing/releases/latest/download/appfolio-leasing.zip -OutFile $z; Expand-Archive $z C:\ -Force; cd C:\appfolio-leasing; Get-ChildItem -Recurse | Unblock-File; powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1
+$z="$env:TEMP\appfolio-leasing.zip"; Invoke-WebRequest https://github.com/NXTSTEPS/appfolio-leasing/releases/latest/download/appfolio-leasing.zip -OutFile $z; Expand-Archive $z C:\ -Force; cd C:\appfolio-leasing; Get-ChildItem -Recurse | Unblock-File; powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1
 ```
 
 Running it again later updates the code and keeps your settings (`config\company.json` and `work\`

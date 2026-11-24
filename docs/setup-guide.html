@@ -120,7 +120,7 @@
   <div class="term"><span class="p">PS&gt;</span> winget install -e --id Python.Python.3.12</div>
   <p>Then <b>close PowerShell and open a new one</b>. <code>python --version</code> should say 3.12.</p>
   <p><b>2. Download and set up: one command.</b> Paste this into the new PowerShell window (it's one line):</p>
-  <div class="term">$z="$env:TEMP\appfolio-leasing.zip"; Invoke-WebRequest https://github.com/JerryWest1/appfolio-leasing/releases/latest/download/appfolio-leasing.zip -OutFile $z; Expand-Archive $z C:\ -Force; cd C:\appfolio-leasing; Get-ChildItem -Recurse | Unblock-File; powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1</div>
+  <div class="term">$z="$env:TEMP\appfolio-leasing.zip"; Invoke-WebRequest https://github.com/NXTSTEPS/appfolio-leasing/releases/latest/download/appfolio-leasing.zip -OutFile $z; Expand-Archive $z C:\ -Force; cd C:\appfolio-leasing; Get-ChildItem -Recurse | Unblock-File; powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1</div>
   <p>It downloads the latest version to <code>C:\appfolio-leasing</code> and starts setup, which asks:</p>
   <table>
     <tr><th style="width:10%">Step</th><th>What happens</th><th>What you do</th></tr>
