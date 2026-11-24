@@ -1,0 +1,59 @@
+{
+  "_readme": "Copy to config/company.json (setup.ps1 does this for you). company.json is never committed. No passwords, keys or URLs here: secrets are saved with Windows DPAPI by connect_apps_script.ps1 / set_secret.ps1. Who receives each email is set in the Google Sheet's Settings tab, not here.",
+  "company": {
+    "name": "Your Property Management Company",
+    "domain": "yourcompany.com",
+    "timezone": "America/New_York",
+    "admin_email": "you@yourcompany.com"
+  },
+  "appfolio": {
+    "base_url": "https://yourcompany.appfolio.com",
+    "service_email": "appfolio-bot@yourcompany.com",
+    "tenant_portal_url": "https://yourcompany.appfolio.com/connect",
+    "_sync_reports": "Empty = only the reports your enabled modules use. AppFolio allows 500 report runs a day per login (resets at midnight Eastern), shared by every PC on that login; each sync runs one per report. Choices: properties, tenants, rent-roll, vacancies, vendors, rental-applications, income-statement.",
+    "sync_reports": []
+  },
+  "windows": {
+    "task_prefix": "AppFolio Leasing"
+  },
+  "delivery": {
+    "method": "apps_script"
+  },
+  "schedule": {
+    "sync_every_minutes": 60,
+    "leasing_at": "9:00 AM"
+  },
+  "modules": {
+    "leasing": {
+      "enabled": true,
+      "_comment": "Reminder timing, recipients and wording are set in the Google Sheet. These control what the bridge reads.",
+      "summary_include_expiring_days": 90,
+      "summary_include_vacancies": true,
+      "summary_include_applications_days": 30,
+      "_smtp_only": "The settings below are used only if delivery.method is not apps_script (direct SMTP mode).",
+      "staff_recipients": [
+        "leasing@yourcompany.com"
+      ],
+      "send_tenant_reminders": false,
+      "first_reminder_after_days": 2,
+      "reminder_every_days": 3,
+      "max_reminders": 6,
+      "cc_staff_on_tenant_reminders": true,
+      "escalate_after_days": 14,
+      "stale_after_days": 60,
+      "reminder_subject": "Reminder: your lease for {unit} is waiting for your signature",
+      "reminder_intro": "Your lease is ready and waiting for your electronic signature."
+    }
+  },
+  "email": {
+    "_comment": "Only for direct SMTP mode (delivery.method other than apps_script). Apps Script sends from the Google account that owns the sheet.",
+    "method": "smtp",
+    "from_name": "Your Company Leasing",
+    "from_address": "leasing@yourcompany.com",
+    "reply_to": "leasing@yourcompany.com",
+    "smtp_host": "smtp.gmail.com",
+    "smtp_port": 587,
+    "smtp_username": "leasing@yourcompany.com",
+    "test_recipient": "you@yourcompany.com"
+  }
+}

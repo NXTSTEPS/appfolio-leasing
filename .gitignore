@@ -1,0 +1,30 @@
+# Runtime data: AppFolio session, database, keys, logs, previews. NEVER commit.
+work/
+config/company.json
+.env
+.env.*
+!.env.example
+*.dpapi
+*.enc
+*.sqlite3*
+*.log
+
+# Python / Node
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# clasp (Apps Script CLI) project link
+.clasp.json
+.clasprc.json
+
+# Release packages (scripts/make_release.ps1)
+dist/

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AppFolio Lease Reminders Setup Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 1 COVER -->
+<section class="page">
+  <div class="banner">
+    <h1>AppFolio Lease Reminders: Setup Guide</h1>
+    <div class="sub">Google Sheet + Windows PC · step by step, with a check after every step</div>
+  </div>
+  <div class="tiles">
+    <div class="tile green"><div class="n">~1 hour</div><div class="l">once</div></div>
+    <div class="tile green"><div class="n">1 command</div><div class="l">on the PC; it asks the questions</div></div>
+    <div class="tile amber"><div class="n">Test mode</div><div class="l">on until you say go: emails reach only you</div></div>
+  </div>
+
+  <h3>What it does</h3>
+  <p>The PC reads AppFolio's <i>Out for Signing</i> leases every hour. The Google Sheet emails each tenant who hasn't signed yet, every few days, until the lease is signed, and sends your team a leasing summary each weekday morning. Each reminder also gets a ready-to-send text message in the sheet. Optional AI wording (Google Gemini) writes each reminder from the lease's real situation, in English or Spanish.</p>
+
+  <h3>The three parts</h3>
+  <div class="flow">
+    <div class="box"><b>A. Google Sheet</b>paste the code, fill Settings, deploy<br><span class="muted">20 min · browser</span></div>
+    <div class="arrow">&#8594;</div>
+    <div class="box"><b>B. Windows PC</b>one command, sign in to AppFolio, paste the code<br><span class="muted">30 min</span></div>
+    <div class="arrow">&#8594;</div>
+    <div class="box"><b>C. Test, go live</b>test emails to you, then switch on<br><span class="muted">10 min</span></div>
+  </div>
+
+  <h3>Before you start</h3>
+  <table>
+    <tr><td style="width:24px">&#9744;</td><td><b>A Google account for the emails</b>, for example <i>leasing@yourcompany.com</i>. Everything is sent from it. (Free Gmail: about 100 emails a day; Google Workspace: about 1,500.)</td></tr>
+    <tr><td>&#9744;</td><td><b>An AppFolio login</b> with access to reports and leasing. A dedicated user is best (see the limit below).</td></tr>
+    <tr><td>&#9744;</td><td><b>A Windows 10/11 PC</b> that is on during business hours. Setup installs everything else.</td></tr>
+    <tr><td>&#9744;</td><td>Your <b>password manager</b>: you'll save a passphrase and a connection code in it.</td></tr>
+    <tr><td>&#9744;</td><td><i>Optional:</i> a <b>Gemini API key</b> from <b>aistudio.google.com/apikey</b>, for AI wording.</td></tr>
+  </table>
+  <div class="warn"><b>AppFolio allows 500 report runs a day per login</b> (it resets at midnight Eastern), shared by every PC signed in with that login. This install uses about 72 a day. If another tool or PC already uses the same AppFolio login, add up its runs first; past 500, every sync fails with <code>run_limit_reached</code> until midnight.</div>
+  <div class="warn"><b>Never share</b> your AppFolio password, MFA codes, the passphrase or the connection code by email or chat. You type them yourself, into the boxes setup opens.</div>
+</section>
+
+<!-- 2 A1-A3 -->
+<section class="page">
+  <div class="secthead"><span class="num">A1</span><h2>Create the sheet and paste the code</h2><span class="time">5 min</span></div>
+  <ol class="steps">
+    <li>Download <b>Code.gs</b> from the release page (next to this PDF) and open it in Notepad.</li>
+    <li>Signed in as the email account, go to <b>sheets.new</b>. Name the sheet <i>Lease Reminders</i>.</li>
+    <li><span class="ui">Extensions › Apps Script</span>. A code editor opens in a new tab.</li>
+    <li>Click in the editor, <b>Ctrl+A</b>, <b>Delete</b>. In Notepad: <b>Ctrl+A</b>, <b>Ctrl+C</b>. In the editor: <b>Ctrl+V</b>.</li>
+    <li>Click <b>Save</b> (disk icon). <b>Keep this tab open</b>; you need it in A4.</li>
+  </ol>
+
+  <div class="secthead" style="margin-top:12px"><span class="num">A2</span><h2>Set up the tabs</h2><span class="time">3 min</span></div>
+  <ol class="steps">
+    <li>Go back to the spreadsheet tab and <b>reload</b> it. After 5–10 seconds the <b>AppFolio Tools</b> menu appears.</li>
+    <li><span class="ui">AppFolio Tools › 1. Set up this spreadsheet</span> → <b>Continue</b> → pick the email account.</li>
+    <li>Google says <b>"Google hasn't verified this app"</b>. That's normal: it's your own script. Click <span class="ui">Advanced</span> → <span class="ui">Go to … (unsafe)</span> → <span class="ui">Allow</span>.</li>
+  </ol>
+  <div class="check"><b>Check:</b> the sheet now has the tabs <b>Settings, Lease Tracker, Reminder Log, Bridge Log</b>, plus <i>Data:</i> tabs.</div>
+
+  <div class="secthead" style="margin-top:12px"><span class="num">A3</span><h2>Fill in Settings</h2><span class="time">5 min</span></div>
+  <p>One row per setting, with help text next to each. Your own address is pre-filled where an email is needed.</p>
+  <div class="mock">
+    <div class="bar"><span class="on">Settings</span><span>Lease Tracker</span><span>Reminder Log</span><span>Bridge Log</span></div>
+    <table>
+      <tr><th>Setting</th><th>Value</th><th>Help</th></tr>
+      <tr><td>Company name</td><td>Maple Ridge Property Management</td><td>Shown in emails</td></tr>
+      <tr><td>Test mode email</td><td class="hl">you@mapleridge.com</td><td>While filled, EVERY email goes only here</td></tr>
+      <tr><td>Alert emails</td><td>you@mapleridge.com</td><td>Who hears about problems</td></tr>
+      <tr><td>Staff emails</td><td>leasing@mapleridge.com</td><td>Get the summary; CC'd on reminders</td></tr>
+      <tr><td>Tenant portal link</td><td>https://mapleridge.appfolio.com/connect</td><td>Your AppFolio resident portal</td></tr>
+      <tr><td>Send tenant reminders</td><td class="hl">NO</td><td>YES to email tenants</td></tr>
+      <tr><td>First reminder after / Remind every / Maximum</td><td>2 / 3 / 6</td><td>Days and count</td></tr>
+      <tr><td>Stale after (days)</td><td>60</td><td>Older leases are never emailed automatically</td></tr>
+      <tr><td>Reminders signed by</td><td>Dana</td><td>Signs the emails and texts</td></tr>
+      <tr><td>AI reminder wording</td><td>YES</td><td>Needs a Gemini key (A6); otherwise standard wording</td></tr>
+    </table>
+  </div>
+  <div class="warn"><b>Leave Test mode email filled</b> and Send tenant reminders = <b>NO</b> until Part C.</div>
+</section>
+
+<!-- 3 A4-A6 -->
+<section class="page">
+  <div class="secthead"><span class="num">A4</span><h2>Deploy the web app (the PC's private address)</h2><span class="time">3 min</span></div>
+  <ol class="steps">
+    <li>In the Apps Script tab: <span class="ui">Deploy › New deployment</span>.</li>
+    <li>Gear next to <i>Select type</i> → <span class="ui">Web app</span>.</li>
+    <li><b>Execute as:</b> Me. <b>Who has access:</b> <b>Anyone</b>.</li>
+    <li><span class="ui">Deploy</span>, approve if asked, and <b>copy the Web app URL</b> (it ends with <code>/exec</code>).</li>
+  </ol>
+  <div class="callout"><b>Why "Anyone"?</b> The PC has no Google login, so the address must accept calls. Every call must carry the secret key from A5; calls without it are refused and logged in <i>Bridge Log</i>.</div>
+  <div class="check"><b>Check:</b> opening the URL in a browser shows <code>{"ok":true,"app":"AppFolio Assistant",…}</code>.</div>
+
+  <div class="secthead" style="margin-top:12px"><span class="num">A5</span><h2>Get the connection code</h2><span class="time">1 min</span></div>
+  <ol class="steps">
+    <li><span class="ui">AppFolio Tools › 2. Connect the PC bridge</span>.</li>
+    <li>Paste the web app URL from A4 and click <b>OK</b>.</li>
+    <li>Click <b>Copy code</b> and save it in your password manager. It starts with <code>AFB1.</code></li>
+  </ol>
+  <div class="check"><b>Check:</b> you have a long code starting with <code>AFB1.</code> saved somewhere safe.</div>
+
+  <div class="secthead" style="margin-top:12px"><span class="num">A6</span><h2>AI wording (optional)</h2><span class="time">3 min</span></div>
+  <ol class="steps">
+    <li>Get a key at <b>aistudio.google.com/apikey</b> (it starts with <code>AIza</code>).</li>
+    <li><span class="ui">AppFolio Tools › Save Gemini API key (AI wording)</span> and paste it.</li>
+  </ol>
+  <div class="callout">Without a key, or whenever Gemini is busy, reminders use the standard wording. If Gemini answers <i>"prepayment credits are depleted"</i>, the key's Google project needs credit (or use a key from a project without billing).</div>
+  <div class="callout"><b>Spanish:</b> AppFolio doesn't record a tenant's language. Pick <i>Spanish</i> in the Lease Tracker's <b>Language</b> column and that tenant's email, subject and text switch to Spanish.</div>
+</section>
+
+<!-- 4 B -->
+<section class="page">
+  <div class="secthead"><span class="num">B</span><h2>Install on the Windows PC</h2><span class="time">30 min</span></div>
+  <p><b>1. Python.</b> Start menu › type <i>PowerShell</i> › open <b>Windows PowerShell</b>, and run:</p>
+  <div class="term"><span class="p">PS&gt;</span> winget install -e --id Python.Python.3.12</div>
+  <p>Then <b>close PowerShell and open a new one</b>. <code>python --version</code> should say 3.12.</p>
+  <p><b>2. Download and set up: one command.</b> Paste this into the new PowerShell window (it's one line):</p>
+  <div class="term">$z="$env:TEMP\appfolio-leasing.zip"; Invoke-WebRequest https://github.com/JerryWest1/appfolio-leasing/releases/latest/download/appfolio-leasing.zip -OutFile $z; Expand-Archive $z C:\ -Force; cd C:\appfolio-leasing; Get-ChildItem -Recurse | Unblock-File; powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1</div>
+  <p>It downloads the latest version to <code>C:\appfolio-leasing</code> and starts setup, which asks:</p>
+  <table>
+    <tr><th style="width:10%">Step</th><th>What happens</th><th>What you do</th></tr>
+    <tr><td>1–2</td><td>Checks Python; installs packages and a browser engine</td><td>Wait</td></tr>
+    <tr><td>3</td><td>Company settings</td><td>Company name, AppFolio address (<code>acme</code> for acme.appfolio.com), the AppFolio login email, your email, time zone, and <b>Y</b> for Leasing</td></tr>
+    <tr><td>4</td><td>A browser opens on AppFolio</td><td><b>You</b> sign in, including MFA, wait for the dashboard, then press Enter. Choose a <b>passphrase</b> (24+ characters) and save it in your password manager</td></tr>
+    <tr><td>5–6</td><td>Creates the local project; first read of AppFolio</td><td>Wait a few minutes</td></tr>
+    <tr><td>7</td><td>Connects to the sheet</td><td>Paste the <code>AFB1.</code> code (the input is hidden)</td></tr>
+    <tr><td>8–9</td><td>Sends the unsigned leases to the sheet. <b>No email is sent</b></td><td>Nothing</td></tr>
+    <tr><td>10</td><td>Installs the scheduled tasks</td><td>Nothing. It prints the AppFolio report runs a day (about 72)</td></tr>
+  </table>
+  <div class="check"><b>Check:</b> setup ends with <b>Setup complete</b>, and the <b>Lease Tracker</b> shows the same unsigned leases as AppFolio › Leasing › Leases › <i>Out for Signing</i>, with <b>Signature status</b> and <b>Reminders go to</b> filled in.</div>
+</section>
+
+<!-- 5 B troubleshooting -->
+<section class="page">
+  <div class="secthead"><span class="num">B</span><h2>If setup stops</h2></div>
+  <p style="margin:8px 0 4px"><b>Something went wrong?</b> Fix it and run <code>.\scripts\setup.ps1</code> again in <code>C:\appfolio-leasing</code>; finished steps are skipped.</p>
+  <table>
+    <tr><th style="width:42%">If setup says…</th><th>Do this</th></tr>
+    <tr><td>Python 3.11+ is required</td><td>Do step 1, then open a <b>new</b> PowerShell window</td></tr>
+    <tr><td>…answered with a web page, not data</td><td>In A4 set <b>Who has access: Anyone</b> and use the URL ending in <code>/exec</code></td></tr>
+    <tr><td>That is not a connection code</td><td>Copy the whole code again from A5. It starts with <code>AFB1.</code></td></tr>
+    <tr><td>The first sync failed (sign-in)</td><td>Run <code>.\scripts\refresh_appfolio_session.ps1</code>, sign in again, then setup again</td></tr>
+    <tr><td>AppFolio's daily report limit is used up (<code>run_limit_reached</code>)</td><td>Nothing is wrong with the PC. Another tool or PC on the same AppFolio login used the day's 500 report runs. Run setup again after midnight Eastern, and slow down whatever else uses that login</td></tr>
+  </table>
+</section>
+
+<!-- 5 C -->
+<section class="page">
+  <div class="secthead"><span class="num">C</span><h2>Test, then go live</h2><span class="time">10 min</span></div>
+  <ol class="steps">
+    <li>On the PC, in <code>C:\appfolio-leasing</code>: <div class="term"><span class="p">PS&gt;</span> .\scripts\run_job.ps1 -Job leasing -Test</div>
+      <div class="check"><b>Check:</b> your test address receives the <b>leasing summary</b> and one <b>[TEST]</b> email for each reminder that is due. The tracker's reminder counts don't change during a test.</div></li>
+    <li>In the sheet: select a Lease Tracker row › <span class="ui">AppFolio Tools › Email me a sample reminder for the selected row</span> to see exactly what that tenant would get.</li>
+    <li><span class="ui">AppFolio Tools › Preview reminders (no email)</span> shows who would be emailed today, and why the others are skipped.</li>
+    <li>Set any lease you don't want chased to <b>Paused</b>. Cancel or re-send <b>stale</b> leases in AppFolio.</li>
+    <li><b>Go live:</b> in Settings, <b>clear</b> <i>Test mode email</i> and set <b>Send tenant reminders</b> to <b>YES</b>.</li>
+    <li><span class="ui">AppFolio Tools › Turn on automation</span>. This starts the watchdog, which emails <i>Alert emails</i> if the PC goes quiet for more than a day.</li>
+  </ol>
+  <div class="check"><b>Check:</b> the next weekday at 9 AM, staff receive the <b>Leasing summary</b>, and the <b>Reminder Log</b> lists the reminders sent.</div>
+
+  <h3>Text messages</h3>
+  <p>Each reminder also writes a text in the Lease Tracker's <b>Text to send</b> column, with the number to text in <b>Reminders go to</b>. Copy it and send it from AppFolio or your phone.</p>
+
+  <h3>From then on</h3>
+  <table>
+    <tr><th>When…</th><th>Do this</th></tr>
+    <tr><td>You get "AppFolio sign-in expired"</td><td>On the PC: <code>.\scripts\refresh_appfolio_session.ps1</code> and sign in (MFA)</td></tr>
+    <tr><td>You get "PC bridge has not checked in"</td><td>Turn the PC on or wake it; check <code>.\scripts\install_schedules.ps1 -List</code></td></tr>
+    <tr><td>Syncs fail with <code>run_limit_reached</code></td><td>The AppFolio login used its 500 report runs for the day. Count every PC and tool on that login; raise <code>schedule.sync_every_minutes</code> in <code>config\company.json</code> and run <code>.\scripts\install_schedules.ps1</code></td></tr>
+    <tr><td>A new version is released</td><td>Run the one-line command from part B again (your settings are kept), and paste the new <b>Code.gs</b>, Save, then <span class="ui">Deploy › Manage deployments › &#9998; › Version: New version › Deploy</span> and <span class="ui">1. Set up this spreadsheet</span></td></tr>
+    <tr><td>You want to see what happened</td><td>Sheet: <b>Reminder Log</b>, <b>Bridge Log</b>. PC: <code>work\logs\</code></td></tr>
+  </table>
+  <div class="callout" style="margin-top:10px"><b>To remove everything:</b> <span class="ui">Turn off automation</span>, delete the sheet, run <code>.\scripts\install_schedules.ps1 -Remove</code> on the PC, then delete <code>C:\appfolio-leasing</code>.</div>
+</section>
+</body>
+</html>

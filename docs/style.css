@@ -1,0 +1,65 @@
+  @page { size: Letter; margin: 0.55in 0.6in 0.7in; }
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; color: #2c2c2a; font-size: 10.5pt; line-height: 1.55; margin: 0; }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .banner { background: #1f3864; color: #fff; border-radius: 12px; padding: 22px 26px; margin-bottom: 16px; }
+  .banner h1 { margin: 0; font-size: 22pt; line-height: 1.2; }
+  .banner .sub { color: #b9c4dc; font-size: 11pt; margin-top: 4px; }
+  .secthead { background: #1f3864; color: #fff; border-radius: 10px; padding: 10px 16px; margin: 0 0 12px; display: flex; align-items: baseline; gap: 12px; }
+  .secthead .num { background: #fff; color: #1f3864; border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 11pt; flex: none; }
+  .secthead h2 { margin: 0; font-size: 14pt; }
+  .secthead .time { margin-left: auto; color: #b9c4dc; font-size: 9.5pt; }
+  h3 { color: #1f3864; font-size: 11.5pt; margin: 14px 0 6px; }
+  p { margin: 0 0 8px; }
+  .muted { color: #5f5e5a; }
+  .tiles { display: flex; gap: 10px; margin: 0 0 14px; }
+  .tile { flex: 1; border-radius: 10px; padding: 10px 12px; border-left: 5px solid; }
+  .tile .n { font-size: 20pt; font-weight: bold; line-height: 1.1; }
+  .tile .l { font-size: 9pt; }
+  .green { background: #eaf3de; border-color: #3b6d11; } .green .n { color: #27500a; }
+  .amber { background: #faeeda; border-color: #854f0b; } .amber .n { color: #633806; }
+  .red { background: #fcebeb; border-color: #a32d2d; } .red .n { color: #791f1f; }
+  .callout { background: #e6f1fb; color: #0c447c; border-radius: 10px; padding: 10px 14px; margin: 10px 0; font-size: 10pt; }
+  .warn { background: #faeeda; color: #633806; border-radius: 10px; padding: 10px 14px; margin: 10px 0; font-size: 10pt; }
+  .check { background: #eaf3de; color: #27500a; border-radius: 10px; padding: 9px 14px; margin: 8px 0 12px; font-size: 10pt; }
+  .check b:first-child::before { content: "\2713  "; }
+  .card { background: #fff; border: 1px solid #e3e4e8; border-radius: 12px; padding: 12px 14px; break-inside: avoid; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 4px 0 8px; }
+  ol.steps > li { counter-increment: s; position: relative; padding: 0 0 10px 34px; break-inside: avoid; }
+  ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 50%; background: #e6f1fb; color: #0c447c; font-weight: bold; font-size: 9.5pt; display: flex; align-items: center; justify-content: center; border: 1px solid #b5d4f4; }
+  .ui { display: inline-block; background: #f4f5f7; border: 1px solid #d3d4d8; border-radius: 4px; padding: 0 5px; font-size: 9.5pt; font-weight: bold; color: #1f3864; white-space: nowrap; }
+  code { font-family: Consolas, monospace; font-size: 9pt; background: #f4f5f7; padding: 1px 4px; border-radius: 3px; }
+  table { border-collapse: collapse; width: 100%; font-size: 9.5pt; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #e3e4e8; vertical-align: top; }
+  th { background: #f4f5f7; color: #5f5e5a; font-size: 8.5pt; text-transform: uppercase; letter-spacing: .3px; }
+  /* mock screens */
+  .mock { border: 1px solid #d3d4d8; border-radius: 8px; overflow: hidden; font-size: 9pt; margin: 6px 0 4px; break-inside: avoid; background: #fff; }
+  .mock .bar { background: #f1f3f4; border-bottom: 1px solid #d3d4d8; padding: 5px 10px; color: #5f5e5a; font-size: 8.5pt; display: flex; gap: 14px; }
+  .mock .bar .on { color: #1a73e8; font-weight: bold; }
+  .mock .bar span { white-space: nowrap; }
+  .mock table td, .mock table th { border: 1px solid #e3e4e8; padding: 4px 7px; font-size: 8.5pt; }
+  .mock table th { background: #f8f9fa; text-transform: none; letter-spacing: 0; color: #3c4043; }
+  .menu { position: relative; display: inline-block; border: 1px solid #d3d4d8; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,.15); background: #fff; padding: 4px 0; min-width: 260px; }
+  .menu div { padding: 4px 14px; font-size: 9pt; }
+  .menu hr { border: 0; border-top: 1px solid #e3e4e8; margin: 3px 0; }
+  .caption { font-size: 8.5pt; color: #888780; margin: 0 0 10px; }
+  .flow { display: flex; align-items: stretch; gap: 0; margin: 8px 0 6px; }
+  .flow .box { flex: 1; background: #fff; border: 1px solid #e3e4e8; border-radius: 10px; padding: 9px 10px; font-size: 9pt; text-align: center; }
+  .flow .box b { display: block; color: #1f3864; font-size: 10pt; margin-bottom: 2px; }
+  .flow .arrow { flex: none; width: 26px; display: flex; align-items: center; justify-content: center; color: #1f3864; font-size: 15pt; }
+  .dlg { border: 1px solid #d3d4d8; border-radius: 8px; padding: 12px 14px; width: 330px; font-size: 9pt; box-shadow: 0 2px 8px rgba(0,0,0,.12); background: #fff; }
+  .dlg .t { font-size: 11pt; margin-bottom: 6px; }
+  .dlg .lnk { color: #1a73e8; text-decoration: underline; }
+  .hl { outline: 2px solid #a32d2d; outline-offset: 1px; border-radius: 3px; }
+  .shot { border: 1px solid #d3d4d8; border-radius: 8px; display: block; max-width: 100%; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+  .twoL { display: grid; grid-template-columns: 1.25fr 1fr; gap: 14px; align-items: start; }
+  .pill { display: inline-block; border-radius: 10px; padding: 0 8px; font-size: 8.5pt; font-weight: bold; }
+  .p-green { background: #eaf3de; color: #27500a; } .p-amber { background: #faeeda; color: #633806; }
+  .p-red { background: #fcebeb; color: #791f1f; } .p-blue { background: #e6f1fb; color: #0c447c; } .p-grey { background: #f1f1ef; color: #5f5e5a; }
+  .term { background: #0f2233; color: #e8eef3; border-radius: 8px; padding: 10px 12px; font-family: Consolas, monospace; font-size: 8.5pt; white-space: pre-wrap; line-height: 1.45; margin: 6px 0; }
+  .term .p { color: #8fd18f; } .term .q { color: #f5c46b; }
+  .clock { display: grid; grid-template-columns: 70px 1fr; gap: 4px 10px; font-size: 9.5pt; }
+  .clock b { color: #1f3864; }
