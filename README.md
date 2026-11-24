@@ -8,6 +8,14 @@ n8n, Zapier or a special AppFolio plan.
 > [latest release](../../releases/latest). It takes about an hour, once.
 > **Setting it up with an AI agent?** Point it at [`AGENTS.md`](AGENTS.md).
 
+## Use at your own risk
+
+This is free software, provided **as is**, with no warranty and no support promise
+([MIT License](LICENSE)). It sends real emails to your tenants and signs in to your AppFolio
+account. You are responsible for checking what it sends and for how it uses your AppFolio and
+Google accounts. Keep **test mode** on until the test emails look right. The authors aren't liable
+for anything it sends or doesn't send, or for any problem with your AppFolio or Google account.
+
 ## Install on a Windows PC (one command)
 
 Open **PowerShell** and paste this. It downloads the latest release to `C:\appfolio-leasing` and
@@ -60,4 +68,9 @@ Test mode is on until you turn it off: every email goes only to you, marked `[TE
 ```
 
 The PC never sends email and never changes anything in AppFolio. The sheet never connects to
-AppFolio. AppFolio is a trademark of AppFolio, Inc.; this project is not affiliated with it.
+AppFolio.
+
+## License
+
+[MIT](LICENSE): free to use, change and share, at your own risk. AppFolio is a trademark of
+AppFolio, Inc.; this project is not affiliated with or endorsed by AppFolio, Inc.
